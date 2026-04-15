@@ -40,10 +40,11 @@ export default function questionere(){
     }}
 
     return(<>
-<div className={`absolute inset-0 bg-white/50 z-50 pointer-events-none transition-opacity duration-300 ${loading ? "opacity-100" : "opacity-0"}`}></div>    <div className="h-full w-[75%] flex flex-col gap-2 ">
+<div className={`absolute inset-0 bg-white/50 z-50 pointer-events-none transition-opacity duration-300 ${loading ? "opacity-100" : "opacity-0"}`}></div>   
+ <div className="h-full w-[75%] flex flex-col gap-2 ">
         <h1 className="mt-20 text-2xl sm:text-4xl">Workout generator:</h1>
         
-        <div className="flex flex-col w-2/5" >
+        <div className="flex flex-col w-full sm:w-2/5" >
             <h3>enter split name:</h3>
             <input 
                 type="text" 
@@ -53,7 +54,7 @@ export default function questionere(){
             />
         </div>
 
-        <div className=" flex flex-row w-2/5 items-center" >
+        <div className=" flex flex-row w-full sm:w-2/5 items-center" >
             <h3>how many time do you want to workout a week?</h3>
             <input 
                 max={7} 
@@ -65,7 +66,7 @@ export default function questionere(){
             />
         </div>
 
-        <div className=" flex flex-row w-2/5 items-center" >
+        <div className=" flex flex-row w-full sm:w-2/5 items-center" >
             <h3>how much time should each workout be? (in hours use x. for minutes)</h3>
             <input 
                 max={4} 
@@ -77,7 +78,7 @@ export default function questionere(){
             />
         </div>
 
-        <div className=" flex flex-row w-2/5 items-center" >
+        <div className=" flex flex-row w-full sm:w-2/5 items-center" >
             <h3>split prefrence (optional)</h3>
             <select 
                 value={splitPreference}
@@ -91,7 +92,7 @@ export default function questionere(){
             </select>
         </div>
 
-        <div className="flex flex-col w-2/5" >
+        <div className="flex flex-col w-full sm:w-2/5" >
             <h3>custom prefrences (optional for example if you want a specific exercise to be inclouded)</h3>
             <input 
                 type="text" 
