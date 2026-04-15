@@ -6,7 +6,7 @@ import Day from "../components/day";
 export default function finishedWorkout() {
     const { workoutData } = useWorkout()
     
-    const result = workoutData.result;
+    const result = workoutData?.result;
 
     if (!result) return null;
 
