@@ -9,7 +9,6 @@ export default function questionere(){
     const {setWorkoutData} = useWorkout();
     const [splitName, setSplitName] = useState("");
     const [days, setDays] = useState("");
-    const [duration, setDuration] = useState("");
     const [splitPreference, setSplitPreference] = useState("no prefrence");
     const [customPreferences, setCustomPreferences] = useState("");
     const [loading, setLoading] = useState(false);
@@ -22,6 +21,7 @@ const options = [
     { value: "PPL", label: "PPL" },
     { value: "FBEOD", label: "FBEOD" },
     { value: "A/P", label: "anterior posterior" },
+    { value: "U/L", label: "upper lower" },
 ];
 
     async function SendParse() {
@@ -36,7 +36,6 @@ const options = [
             body: JSON.stringify({
                 splitName,
                 days,
-                duration,
                 splitPreference,
                 customPreferences
             }),
@@ -74,17 +73,7 @@ const options = [
 />
         </div>
 
-        <div className=" flex flex-row w-full sm:w-2/5 items-center" >
-            <h3>how much time should each workout be? (in hours use x. for minutes)</h3>
-            <input 
-    max={4} 
-    min={1} 
-    type="number" 
-    value={duration}
-    onChange={(e) => setDuration(e.target.value)}
-    className="rounded-2xl border w-10 h-10 ml-auto text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
-/>
-        </div>
+        
 
         <div className=" flex flex-row w-full sm:w-2/5 items-center" >
             <h3>split prefrence (optional)</h3>

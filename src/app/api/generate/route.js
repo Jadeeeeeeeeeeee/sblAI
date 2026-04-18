@@ -9,22 +9,24 @@ Return ONLY valid JSON matching the schema below. No preamble, no explanation, n
 
 REQUIRED MUSCLE GROUPS — every group below must appear at least once across the full program:
 - Chest: upper head, mid/lower head (2 exercises per session it appears)
-- Quads (2 exercises per session it appears)
-- Hamstrings (2 exercises per session it appears)
+- Quads (2 one compound one isolation exercises per session it appears)
+- Hamstrings (1 exercises per session it appears)
 - Glutes
 - Calves
-- Lats (2 exercises per session it appears)
+- Lats (2 exercises per session it appears one in the horizontal plane and one in the frontal plain;
 - Mid-traps / Rhomboids
 - Rear Delts
-- Biceps: long head, short head (one exercise each)
+- Biceps: cant target heads use one exercise
 - Brachialis
-- Forearms
-- Triceps: long head, lateral head, medial head (one exercise each)
+- Forearms: 
+- Triceps: lateral and medial heads are usually trained togther one exercise for those and one exercise for long head
 - Front Delts
 - Side Delts
 
 EXERCISE NAMING:
-- DO NOT write high pull or low pull or any pully type
+- do not write pad or platform
+- do not write handle type on self explanetory handles for example cable fly can only be done with d handles so do not write cable fly single handle
+- do not name height pully type for example do not write mid pully or high pully or low pully
 - grip should be in the start of the without brackets name eg: "wide grip lat pulldown"
 - do not list stuff like bench degreess just say incline or pully type 
 - do not write the word with to specify attachment just say the attachment like "lat pulldown long bar" 
@@ -40,22 +42,26 @@ SPLIT RULES:
 - 4 days → upper/lower or antiror/postiror
 - 5–6 days → push/pull/legs
 - all exercises have the same amount of sets and rep ranges
-- If full body: verify total exercises do not exceed 8 and no muscle group has more than 1 exercise 
-- Every muscle group must be trained at least 2x per week
-- Big muscles (chest, quads, hamstrings, lats): always 2 exercises on days they are trained unless full body
+- Full body days must include exactly one exercise per muscle group, no exceptions
+- On full body days: biceps = 1 exercise, triceps = 1 exercise, shoulders = 1 exercise (side delts only, front delts and rear delts are covered by compounds)
+- On full body days: do not add dedicated forearm or front delt exercises
+- 2x/week frequency is met by exercise variation across days, never by assigning muscles to specific days
 - Day names are simple: "Push", "Pull", "Legs", "Upper", "Lower", "Full Body"
 - Repeated days are identical — a 6 day PPL has one Push template, one Pull template, one Legs template, each done twice
 - In the JSON, repeated days must have the exact same exercises, sets, reps, tempo, and notes
 
 EXERCISE SELECTION — apply in this priority order:
-1. Cable > machine > dumbbell > barbell (barbell is last resort only)
-2. Seated / supported > standing where stability matters
-3. Include unilateral movements where appropriate (e.g. single-leg curl, single-arm cable row)
-4. always list attatchment name and take it for account because diffrent attatchments train diffrent parts.
-5. Order exercises by CNS demand: compound first, isolation last
-6. No bodyweight or calisthenics (no pull-ups, push-ups, dips, etc.)
-7. No unstable surface movements (no BOSU, no standing cable fly)
-8. no walking exercises
+1. do not invent exercises like seated wrist curl machine
+2. Cable > machine > dumbbell > barbell (barbell is last resort only)
+3. Seated / supported > standing where stability matters
+4. never use decline movements
+5. Include unilateral movements where appropriate (e.g. single-leg curl, single-arm cable row)
+6. always list attatchment name and take it for account because diffrent attatchments train diffrent parts.
+7. Order exercises by CNS demand: compound first, isolation last
+8. No bodyweight or calisthenics (no pull-ups, push-ups, dips, etc.)
+9. No unstable surface movements (no BOSU, no standing cable fly)
+10. no walking exercises
+
 
 VOLUME AND INTENSITY:
 - Sets per exercise: 2–3 
@@ -68,7 +74,7 @@ REQUIRED JSON SCHEMA (return nothing outside this structure):
   "split_name": string,
   "goal": string,
   "frequency_per_week": number,
-  "rep_range " x-y
+  "rep_range" x-y
   "set_amount": number
   "days": [
     {
@@ -89,15 +95,17 @@ REQUIRED JSON SCHEMA (return nothing outside this structure):
     }
   ]
 }`;
-
 const userMessage = (body) => `Generate a complete hypertrophy program for the following input.
 
 Before finalising:
-- If full body: verify each day has exactly 6 exercises and muscles are distributed across days, not repeated every day
+- if upper day: big muscle groups get 2 exercises (chest back) and smaller get one exercise (triceps biceps shoulders)
+- if lower day each mucle has 2 exercises.
+- If full body: verify every single day trains the complete body — chest, back, legs, shoulders, and arms must all appear every day
+- If full body: verify each day has exactly 1 exercise per group: chest, quads, hamstrings, glutes, calves, lats, mid-traps, rear delts, side delts, biceps, triceps — no more, no less
+- If full body: verify all 3 days are different from each other — no two days can have the same exercise list
 - Verify every muscle in the REQUIRED MUSCLE GROUPS list appears in the program
-- Verify repeated days (e.g. both Push days) have identical exercises, sets, reps, and tempo
-- Verify big muscles have 2 exercises on every day they are trained
-- Verify all tricep heads, shoulder heads, and bicep heads are each covered
+- Verify repeated days ONLY when the split requires it (e.g. a 6-day PPL where Push appears twice)
+- Verify big muscles have 2 exercises on every day they are trained in split programs
 
 User input: ${JSON.stringify(body)}`;
 export async function POST(req) {
@@ -107,7 +115,7 @@ export async function POST(req) {
 
     const response = await client.responses.create({
       model: "gpt-5-mini",
-      reasoning: { effort: "low" },
+      reasoning: { effort: "medium" },
       text: { format: { type: "json_object" } },
       input: [
         { role: "system", content: SYSTEM_PROMPT },

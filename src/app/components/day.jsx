@@ -6,9 +6,9 @@ export default function Day({ dayNum }) {
     const day = workoutData.result.days[dayNum];
 
     return (
-        <div className="w-full sm:w-[50%]">
-  <div className=" border rounded-2xl h-full p-1">
-    <h1 className="text-3xl text-center">{day.day_name}</h1>
+        <div className="w-[240px]">
+  <div className=" border rounded-xl h-full p-1">
+    <h1 className="text-3xl text-center">day:{dayNum}: {day.day_name}</h1>
     <div className="text-xl w-58 h-auto border-t flex flex-col">
       {day.exercises.map((exercise, i) => (
         <div key={i}>
