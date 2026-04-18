@@ -42,10 +42,9 @@ const options = [
             }),
         });
 
-const text = await res.text();
-console.log(text);
-const data = JSON.parse(text);
-setWorkoutData(data);                  router.replace("/finishedWorkout");
+        const data = await res.json();
+        setWorkoutData(data);        
+                  router.replace("/finishedWorkout");
     }}
 
     return(<>
