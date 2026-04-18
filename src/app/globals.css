@@ -1,7 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-:root {
 
+
+
+:root {
+font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color:white;
+}
+  
+
+h1{
+  font-weight: 600;
 }
 
 @theme inline {
@@ -16,4 +28,51 @@
 
 body {
 
+}
+
+.green_gradient_text{
+  background-image: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(105, 245, 131, 1) 100%);
+  color:transparent;
+  background-clip: text;
+}
+
+.green_bg{
+  background: rgba(105, 245, 131, 1);
+}
+
+.green_text{
+   color: rgba(105, 245, 131, 1); 
+}
+
+.navbar_button{
+  color:white;
+  font-weight: 500; 
+}
+
+.navbar_button:hover{
+  background-image: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(105, 245, 131, 1) 100%);
+  color:transparent;
+  background-clip: text;
+  transition: all;
+  transition-duration: 0.5s;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; 
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.green_bg_button{
+    background: rgba(105, 245, 131, 1);
+}
+
+.green_bg_button:hover{
+    background: rgb(157, 255, 175);
+    transition: all;
+    transition-duration: 0.5s;
 }

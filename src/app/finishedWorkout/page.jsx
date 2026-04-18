@@ -20,7 +20,7 @@ export default function finishedWorkout() {
     if (!result) return null;
     return(<>
     <div className="h-full w-full flex justify-center">
-        <div className="h-fit w-auto flex sm:flex-row flex-col gap-2">
+<div className="w-auto flex sm:flex-row flex-col sm:mt-10 mt-14 gap-4 sm:gap-2 items-stretch">
             {result.days.map((day, i) => (
                 <Day key={i} dayNum={i}></Day>
             ))}

@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full`}>
-      <body className="min-h-screen flex flex-col items-center">
+      <body className="min-h-screen flex bg-black flex-col items-center">
         <WorkoutProvider>
            <Navbar ></Navbar>
            {children}

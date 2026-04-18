@@ -1,3 +1,4 @@
+
 import { useWorkout } from "../context/workoutContext";
 
 export default function Day({ dayNum }) {
@@ -5,16 +6,17 @@ export default function Day({ dayNum }) {
     const day = workoutData.result.days[dayNum];
 
     return (
-        <div className="h-full border rounded-xl">
-            <h1 className="text-xl text-center">{day.day_name}</h1>
-            <div className="text-xs w-58 h-80 border-t flex flex-col">
-                {day.exercises.map((exercise, i) => (
-                    <div key={i}>
-                        <h1>{exercise.name} {exercise.sets}x{exercise.reps}</h1>
-                        <h4>{exercise.notes}</h4>
-                    </div>
-                ))}
-            </div>
+        <div className="w-full sm:w-[50%]">
+  <div className=" border rounded-2xl h-full p-1">
+    <h1 className="text-3xl text-center">{day.day_name}</h1>
+    <div className="text-xl w-58 h-auto border-t flex flex-col">
+      {day.exercises.map((exercise, i) => (
+        <div key={i}>
+          <h3 className="flex flex-row gap-1"><p className="green_text">{i + 1}.</p> <p className="">{exercise.name}</p></h3>
         </div>
+      ))}
+    </div>
+  </div>
+</div>
     );
 }
