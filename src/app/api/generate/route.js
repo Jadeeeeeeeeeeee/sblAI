@@ -40,7 +40,8 @@ EXERCISE NAMING:
 SPLIT RULES:
 - 1–3 days → full-body only
 - 4 days → upper/lower or antiror/postiror
-- 5–6 days → push/pull/legs
+- 5 days -> ppl + upper lower
+- 6 days → push/pull/legs
 - all exercises have the same amount of sets and rep ranges
 - Full body days must include exactly one exercise per muscle group, no exceptions
 - On full body days: biceps = 1 exercise, triceps = 1 exercise, shoulders = 1 exercise (side delts only, front delts and rear delts are covered by compounds)
@@ -67,7 +68,6 @@ VOLUME AND INTENSITY:
 - Sets per exercise: 2–3 
 - Rep ranges: 5–8 
 - RIR: 0–1 on all working sets (train to or 1 rep from failure)
-- Tempo format: "eccentric-pause-concentric-pause" e.g. "3-1-1-0"
 
 REQUIRED JSON SCHEMA (return nothing outside this structure):
 {
@@ -87,9 +87,6 @@ REQUIRED JSON SCHEMA (return nothing outside this structure):
           "order": number,
           "name": string,
           "target_muscle": string,
-          "rir": number,
-          "tempo": string,
-          "notes": string
         }
       ]
     }
@@ -99,13 +96,12 @@ const userMessage = (body) => `Generate a complete hypertrophy program for the f
 
 Before finalising:
 - if upper day: big muscle groups get 2 exercises (chest back) and smaller get one exercise (triceps biceps shoulders)
-- if lower day each mucle has 2 exercises.
+- if lower day in a upper lower split  each mucsle has 2 exercises.
 - If full body: verify every single day trains the complete body — chest, back, legs, shoulders, and arms must all appear every day
 - If full body: verify each day has exactly 1 exercise per group: chest, quads, hamstrings, glutes, calves, lats, mid-traps, rear delts, side delts, biceps, triceps — no more, no less
 - If full body: verify all 3 days are different from each other — no two days can have the same exercise list
 - Verify every muscle in the REQUIRED MUSCLE GROUPS list appears in the program
 - Verify repeated days ONLY when the split requires it (e.g. a 6-day PPL where Push appears twice)
-- Verify big muscles have 2 exercises on every day they are trained in split programs
 
 User input: ${JSON.stringify(body)}`;
 export async function POST(req) {
@@ -115,7 +111,7 @@ export async function POST(req) {
 
     const response = await client.responses.create({
       model: "gpt-5-mini",
-      reasoning: { effort: "medium" },
+      reasoning: { effort: "low" },
       text: { format: { type: "json_object" } },
       input: [
         { role: "system", content: SYSTEM_PROMPT },

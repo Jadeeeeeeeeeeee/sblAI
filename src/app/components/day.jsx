@@ -8,7 +8,7 @@ export default function Day({ dayNum }) {
     return (
         <div className="w-[240px]">
   <div className=" border rounded-xl h-full p-1">
-    <h1 className="text-3xl text-center">day:{dayNum}: {day.day_name}</h1>
+    <h1 className="text-3xl text-center">day:{dayNum  + 1}: {day.day_name}</h1>
     <div className="text-xl w-58 h-auto border-t flex flex-col">
       {day.exercises.map((exercise, i) => (
         <div key={i}>

@@ -24,30 +24,65 @@ const options = [
     { value: "U/L", label: "upper lower" },
 ];
 
-    async function SendParse() {
-    if (splitName !== "" && Number(duration) != 0 && Number(days) != 0) {
+const [progress, setProgress] = useState(0);
+const [statusMsg, setStatusMsg] = useState("");
 
-        setLoading(true)
-        const res = await fetch('/api/generate', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                splitName,
-                days,
-                splitPreference,
-                customPreferences
-            }),
-        });
+const messages = [
+  "Selecting exercises...",
+  "Balancing muscle groups...",
+  "Optimizing split...",
+  "Verifying volume...",
+  "Almost ready...",
+];
 
-        const data = await res.json();
-        setWorkoutData(data);        
-                  router.replace("/finishedWorkout");
-    }}
+async function SendParse() {
+  if (splitName !== "" && Number(days) !== 0) {
+    setLoading(true);
+    setProgress(0);
+    setStatusMsg(messages[0]);
 
+    let progress = 0;
+    let msgIndex = 0;
+
+    const interval = setInterval(() => {
+      progress += progress < 30 ? 3 : progress < 60 ? 1.5 : progress < 85 ? 0.5 : 0.1;
+      progress = Math.min(progress, 92);
+      setProgress(Math.round(progress));
+
+      const newIndex = Math.min(Math.floor(progress / 20), messages.length - 1);
+      if (newIndex !== msgIndex) {
+        msgIndex = newIndex;
+        setStatusMsg(messages[msgIndex]);
+      }
+    }, 300);
+
+    const res = await fetch('/api/generate', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ splitName, days, splitPreference, customPreferences }),
+    });
+
+    const data = await res.json();
+    clearInterval(interval);
+    setProgress(100);
+
+    setTimeout(() => {
+      setWorkoutData(data);
+      router.replace("/finishedWorkout");
+    }, 400);
+  }
+}
     return(<>
-<div className={`absolute inset-0 bg-white/50 z-50 pointer-events-none transition-opacity duration-300 ${loading ? "opacity-100" : "opacity-0"}`}></div>   
+<div className={`absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/60 z-50 transition-opacity duration-300 ${loading ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+  <p className="text-white text-lg font-medium">{statusMsg}</p>
+  <div className="w-72 h-2 bg-white/20 rounded-full overflow-hidden">
+    <div
+      className="h-full bg-green-400 rounded-full transition-all duration-300"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
+  <p className="text-white/60 text-sm">{Math.round(progress)}%</p>
+</div>
  <div className="h-full w-[75%] flex flex-col gap-2 ">
         <h1 className="mt-20 text-2xl sm:text-4xl green_gradient_text">Workout generator:</h1>
         

@@ -15,17 +15,19 @@ export default function Navbar() {
       {/* nav links */}
       <div className="ml-4 flex flex-row items-center h-full gap-3 sm:gap-6">
 
-        <a href="/WorkoutGenerator" className="px-2 navbar_button sm:px-4 h-full flex items-center justify-center">
+        <a href="/WorkoutGenerator" className={`navbar_button px-2 sm:px-4 h-full flex items-center justify-center`}>
+          <h1 className="text-[85%]  sm:text-[110%] whitespace-nowrap">
+            home
+          </h1>
+        </a>
+
+        <a href="/questionere" className="px-2 navbar_button sm:px-4 h-full flex items-center justify-center">
           <h1 className="text-[85%] sm:text-[110%] whitespace-nowrap">
             Generate Workout
           </h1>
         </a>
 
-        <a href="#" className={`navbar_button px-2 sm:px-4 h-full flex items-center justify-center`}>
-          <h1 className="text-[85%]  sm:text-[110%] whitespace-nowrap">
-            SBL Form Advice
-          </h1>
-        </a>
+        
 
       </div>
     </div>
