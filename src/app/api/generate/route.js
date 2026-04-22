@@ -1,7 +1,14 @@
 import OpenAI from "openai";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(25, "1 d"),
 });
 
 const SYSTEM_PROMPT = `You are a hypertrophy program generator using science-based principles.
@@ -92,6 +99,7 @@ REQUIRED JSON SCHEMA (return nothing outside this structure):
     }
   ]
 }`;
+
 const userMessage = (body) => `Generate a complete hypertrophy program for the following input.
 
 Before finalising:
@@ -104,10 +112,50 @@ Before finalising:
 - Verify repeated days ONLY when the split requires it (e.g. a 6-day PPL where Push appears twice)
 
 User input: ${JSON.stringify(body)}`;
+
+const ALLOWED_PREFERENCES = ["no prefrence", "PPL", "FBEOD", "A/P", "U/L"];
+
+function validateBody(body) {
+  const { splitName, days, splitPreference, customPreferences } = body;
+
+  if (typeof splitName !== "string" || splitName.trim() === "") {
+    return "splitName is required";
+  }
+  if (splitName.length > 100) {
+    return "splitName too long";
+  }
+
+  const daysNum = Number(days);
+  if (!Number.isInteger(daysNum) || daysNum < 1 || daysNum > 6) {
+    return "days must be an integer between 1 and 6";
+  }
+
+  if (!ALLOWED_PREFERENCES.includes(splitPreference)) {
+    return "invalid splitPreference value";
+  }
+
+  if (typeof customPreferences !== "string" || customPreferences.length > 200) {
+    return "customPreferences must be a string under 200 characters";
+  }
+
+  return null;
+}
+
 export async function POST(req) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return Response.json({ error: "Too many requests. Try again later." }, { status: 429 });
+  }
 
   try {
     const body = await req.json();
+
+    const validationError = validateBody(body);
+    if (validationError) {
+      return Response.json({ error: validationError }, { status: 400 });
+    }
 
     const response = await client.responses.create({
       model: "gpt-5-mini",
@@ -123,8 +171,7 @@ export async function POST(req) {
 
     return Response.json({ result: parsed });
   } catch (error) {
-    console.error(error);
-    console.log(error);
+    console.error("Generation failed:", error.message);
     return Response.json({ error: "Failed to generate program" }, { status: 500 });
   }
 }
