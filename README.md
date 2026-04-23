@@ -59,8 +59,6 @@ Create a `.env.local` file:
 
 ```env
 OPENAI_API_KEY=your_key_here
-UPSTASH_REDIS_REST_URL=your_url
-UPSTASH_REDIS_REST_TOKEN=your_token
 ```
 
 ---
