@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧠 SBL AI — Science-Based Workout Generator
 
-## Getting Started
+SBL AI creates personalized, science-based workout programs in seconds.
 
-First, run the development server:
+No spreadsheets, no guessing — just answer a few questions and get a complete training plan you can take straight to the gym.
+
+---
+
+## 🚀 What You Get
+
+* 🏋️‍♂️ **Complete workout program** tailored to you
+* 🧠 **Built on proven hypertrophy principles**
+* ⚖️ **Balanced muscle development** (no missed muscle groups)
+* ⚡ **Instant results** — no planning needed
+
+---
+
+## 🧩 How It Works
+
+1. Fill out a short questionnaire
+2. The AI builds your program
+3. View your workouts by day
+4. Start training
+
+---
+
+## 🎯 Who It’s For
+
+* Beginners who don’t know where to start
+* Lifters who want a solid, balanced program
+* Anyone tired of overcomplicated workout planning
+
+---
+
+## 💡 Why SBL AI?
+
+Most workout generators give random or unbalanced plans.
+
+SBL AI is different:
+
+* Every program follows real training principles
+* Exercises are selected with purpose
+* Programs are actually usable in the gym
+
+---
+
+## ⚙️ Run Locally (Optional)
+
+If you want to run the project yourself:
 
 ```bash
+git clone https://github.com/your-username/sblAI.git
+cd sblAI
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env.local` file:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```env
+OPENAI_API_KEY=your_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚠️ Disclaimer
 
-To learn more about Next.js, take a look at the following resources:
+This tool provides general fitness guidance.
+It is not a substitute for professional coaching or medical advice.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
